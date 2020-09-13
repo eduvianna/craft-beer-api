@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  craftbeer-postgres-dev:
+    image: postgres
+    container_name: 'craftbeer-pg-dev'
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - craftbeer_pg_data:/var/lib/postgresql/data
+    networks:
+      - craftbeer_networks
+
+volumes:
+  craftbeer_pg_data:
+
+networks:
+  craftbeer_networks:
+    name: craftbeer_networks
