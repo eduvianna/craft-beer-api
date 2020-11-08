@@ -11,9 +11,10 @@ export class createUsersTable1600011065205 implements MigrationInterface {
     columns: [
       {
         name: 'id',
-        type: 'UUID',
+        type: 'VARCHAR',
         isPrimary: true,
         generationStrategy: 'uuid',
+        default: 'uuid_generate_v4()',
       },
       {
         name: 'email',
@@ -37,7 +38,7 @@ export class createUsersTable1600011065205 implements MigrationInterface {
       },
       {
         name: 'avatar_id',
-        type: 'UUID',
+        type: 'VARCHAR',
         isNullable: true,
       },
       {

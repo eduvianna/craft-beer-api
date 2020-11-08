@@ -6,9 +6,10 @@ export class createFilesTable1600005685692 implements MigrationInterface {
     columns: [
       {
         name: 'id',
-        type: 'UUID',
+        type: 'VARCHAR',
         isPrimary: true,
         generationStrategy: 'uuid',
+        default: 'uuid_generate_v4()',
       },
       {
         name: 'name',
