@@ -14,9 +14,9 @@ import * as databaseOptions from './config/database';
       playground: true,
       context: ({ req }) => ({ req }),
     }),
-    AuthModule,
     UserModule,
     FileModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

@@ -1,20 +1,11 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import User from 'src/db/models/user.entity';
+import { InputType } from '@nestjs/graphql';
+import { IsEmail, IsString } from 'class-validator';
 
 @InputType()
-export default class AuthInput {
-  @Field()
+export class AuthInput {
+  @IsEmail()
   readonly email: string;
 
-  @Field()
+  @IsString({ message: 'Password must be a string' })
   readonly password: string;
-}
-
-@ObjectType()
-export class LoginResponse {
-  @Field()
-  readonly user: User;
-
-  @Field()
-  readonly token: string;
 }

@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { User } from 'src/user/user.entity';
-import { LoginResponse } from 'src/auth/dto/auth.input';
+import { LoginResponse } from 'src/auth/dto/login-response.input';
 
 @Injectable()
 export class AuthService {
