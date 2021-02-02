@@ -7,6 +7,13 @@ input AuthInput {
   password: String!
 }
 
+input CreateSensorInput {
+  description: String
+  sensor_id: String!
+  type: String!
+  username: String!
+}
+
 input CreateUserInput {
   avatarId: String!
   email: String!
@@ -34,16 +41,36 @@ type LoginResponse {
 }
 
 type Mutation {
+  createSensor(data: CreateSensorInput!): Sensor!
   createUser(data: CreateUserInput!): User!
   login(data: AuthInput!): LoginResponse!
+  updateSensor(data: UpdateSensorInput!): Sensor!
   updateUser(data: UpdateUserInput!): User!
   uploadProfile(file: Upload!): File!
 }
 
 type Query {
   files: [File!]!
+  sensors: [Sensor!]!
   users: [User!]!
   whoAmI: User!
+}
+
+type Sensor {
+  createdAt: DateTime!
+  description: String!
+  id: ID!
+  name: String!
+  sensor_id: String!
+  type: String!
+  updatedAt: DateTime!
+}
+
+input UpdateSensorInput {
+  description: String
+  name: String
+  sensor_id: String
+  type: String
 }
 
 input UpdateUserInput {
