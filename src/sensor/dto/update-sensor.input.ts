@@ -3,10 +3,6 @@ import { IsOptional, IsString } from 'class-validator';
 
 @InputType()
 export class UpdateSensorInput {
-  @IsString({ message: 'Sensor ID must be a string' })
-  @IsOptional()
-  readonly sensor_id?: string;
-
   @IsString({ message: 'Sensor name must be a string' })
   @IsOptional()
   readonly name?: string;

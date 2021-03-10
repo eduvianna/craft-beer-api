@@ -24,7 +24,10 @@ export class SensorResolver {
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Sensor)
-  async updateSensor(@Args('data') data: UpdateSensorInput): Promise<Sensor> {
-    return this.sensorService.updateSensor(data);
+  async updateSensor(
+    @Args('id') id: string,
+    @Args('data') data: UpdateSensorInput,
+  ): Promise<Sensor> {
+    return this.sensorService.updateSensor(id, data);
   }
 }

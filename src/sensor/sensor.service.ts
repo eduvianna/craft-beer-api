@@ -27,17 +27,15 @@ export class SensorService {
     return sensor;
   }
 
-  async updateSensor(data: UpdateSensorInput): Promise<Sensor> {
-    const sensor = await this.sensorRepository.findOne({
-      where: { sensor_id: data.sensor_id },
+  async updateSensor(id: string, data: UpdateSensorInput): Promise<Sensor> {
+    const sensor = await this.sensorRepository.findOneOrFail({
+      where: { id },
     });
 
-    await this.sensorRepository.update(sensor, data);
-
-    return this.sensorRepository.create({ ...sensor, ...data });
+    return this.sensorRepository.save({ ...sensor, ...data });
   }
 
-  async showSensor(data: Sensor): Promise<Sensor> {
-    return this.sensorRepository.findOne({ where: { id: data.id } });
+  async showSensor(id: Pick<Sensor, 'id'>): Promise<Sensor> {
+    return this.sensorRepository.findOne({ where: { id } });
   }
 }
