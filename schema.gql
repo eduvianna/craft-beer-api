@@ -7,11 +7,15 @@ input AuthInput {
   password: String!
 }
 
+input CreateMeasurementInput {
+  sensorId: String!
+  value: Float!
+}
+
 input CreateSensorInput {
   description: String
-  sensor_id: String!
+  name: String!
   type: String!
-  username: String!
 }
 
 input CreateUserInput {
@@ -40,11 +44,20 @@ type LoginResponse {
   user: User!
 }
 
+type Measurement {
+  createdAt: DateTime!
+  id: ID!
+  sensorId: String!
+  updatedAt: DateTime!
+  value: Float!
+}
+
 type Mutation {
+  createMeasurement(data: CreateMeasurementInput!): Measurement!
   createSensor(data: CreateSensorInput!): Sensor!
   createUser(data: CreateUserInput!): User!
   login(data: AuthInput!): LoginResponse!
-  updateSensor(data: UpdateSensorInput!): Sensor!
+  updateSensor(data: UpdateSensorInput!, id: String!): Sensor!
   updateUser(data: UpdateUserInput!): User!
   uploadProfile(file: Upload!): File!
 }
@@ -60,8 +73,8 @@ type Sensor {
   createdAt: DateTime!
   description: String!
   id: ID!
+  measurements: [Measurement!]!
   name: String!
-  sensor_id: String!
   type: String!
   updatedAt: DateTime!
 }
@@ -69,7 +82,6 @@ type Sensor {
 input UpdateSensorInput {
   description: String
   name: String
-  sensor_id: String
   type: String
 }
 

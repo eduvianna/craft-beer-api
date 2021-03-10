@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Websockets Client Tester</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+  <div id="v-app">
+    <h1>Websockets Listener</h1>
+    <form>
+      <input v-model="measurementSensor" type="text"/>
+      <input v-model="measurementValue" type="text"/>
+      <button type="submit" @click.prevent="sendMeasurement()">Send</button>
+    </form>
+    <p>
+      <ul>
+        <li v-for="measurement of measurements">
+          <strong>{{measurement.sensor.name}}:</strong> {{measurement.value}}
+        </li>
+      </ul>
+    </p>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#v-app',
+      data: {
+        measurementSensor: '',
+        measurementValue: '',
+        measurements: [],
+        socket: { measurement: null },
+      },
+      methods: {
+        receiveMeasurements(measurements) {
+          console.log("AAA")
+          this.measurements = measurements
+        },
+        receiveMeasurement(measurement) {
+          this.measurements.push(measurement)
+        },
+        sendMeasurement() {
+          this.socket.measurement.emit("saveMeasurement", {
+            sensorId: this.measurementSensor,
+            value: this.measurementValue
+          })
+        }
+      },
+      created() {
+        this.socket.measurement = io('http://localhost:3333/measurement')
+
+        this.socket.measurement.emit('getMeasurements')
+        
+        this.socket.measurement.on('returnGetMeasurements', (payload) => {
+          this.receiveMeasurements(payload)
+        })
+
+        this.socket.measurement.on('returnSaveMeasurement', (payload) => {
+          this.receiveMeasurement(payload)
+        })
+      }
+    })
+  </script>
+</body>
+</html>
