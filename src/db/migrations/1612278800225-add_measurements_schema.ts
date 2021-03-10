@@ -1,8 +1,13 @@
-import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import {
+  MigrationInterface,
+  QueryRunner,
+  Table,
+  TableForeignKey,
+} from 'typeorm';
 
-export class addSensorsSchema1612278351759 implements MigrationInterface {
+export class addMeasurementsSchema1612278800225 implements MigrationInterface {
   private table = new Table({
-    name: 'sensors',
+    name: 'measurements',
     columns: [
       {
         name: 'id',
@@ -12,21 +17,14 @@ export class addSensorsSchema1612278351759 implements MigrationInterface {
         default: 'uuid_generate_v4()',
       },
       {
-        name: 'name',
+        name: 'sensor_id',
         type: 'VARCHAR',
-        length: '40',
         isNullable: false,
       },
       {
-        name: 'description',
+        name: 'value',
         type: 'VARCHAR',
-        length: '1000',
-        isNullable: true,
-      },
-      {
-        name: 'type',
-        type: 'VARCHAR',
-        length: '50',
+        length: '255',
         isNullable: false,
       },
       {
@@ -44,9 +42,17 @@ export class addSensorsSchema1612278351759 implements MigrationInterface {
     ],
   });
 
+  private foreignKey = new TableForeignKey({
+    columnNames: ['sensor_id'],
+    referencedColumnNames: ['id'],
+    onDelete: 'CASCADE',
+    referencedTableName: 'sensors',
+  });
+
   public async up(queryRunner: QueryRunner): Promise<void> {
     console.log(`UP ${__filename}`);
     await queryRunner.createTable(this.table);
+    await queryRunner.createForeignKey('measurements', this.foreignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
