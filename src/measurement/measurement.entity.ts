@@ -4,26 +4,24 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Measurement } from 'src/measurement/measurement.entity';
+import { Sensor } from 'src/sensor/sensor.entity';
 
 @ObjectType()
-@Entity({ name: 'sensors' })
-export class Sensor {
+@Entity({ name: 'measurements' })
+export class Measurement {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  name: string;
+  @Column({ name: 'sensor_id' })
+  sensorId: string;
 
   @Column()
-  description: string;
-
-  @Column()
-  type: string;
+  value: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
@@ -31,10 +29,11 @@ export class Sensor {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  // Associations
-  @OneToMany(
-    () => Measurement,
-    measurement => measurement.sensor,
+  // Associatios
+  @ManyToOne(
+    () => Sensor,
+    sensor => sensor.measurements,
   )
-  measurements: Promise<Measurement[]>;
+  @JoinColumn({ name: 'sensor_id' })
+  sensor: Promise<Sensor> | Sensor;
 }

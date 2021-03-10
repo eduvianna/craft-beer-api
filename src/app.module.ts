@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { FileModule } from './file/file.module';
 import { SensorModule } from './sensor/sensor.module';
+import { MeasurementModule } from './measurement/measurement.module';
 import * as databaseOptions from './config/database';
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import * as databaseOptions from './config/database';
     FileModule,
     AuthModule,
     SensorModule,
+    MeasurementModule,
   ],
 })
 export class AppModule {}
