@@ -35,3 +35,8 @@ lerna-debug.log*
 
 # Local Envinronment
 .env
+
+
+# Upload Files
+uploads/profiles/*.jpeg
+uploads/profiles/*.png

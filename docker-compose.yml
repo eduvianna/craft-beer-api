@@ -15,6 +15,17 @@ services:
     networks:
       - craftbeer_networks
 
+  craftbeer-api:
+    container_name: 'craftbeer-api'
+    build: .
+    networks:
+      - craftbeer_networks
+    ports:
+      - '3333:3333'
+    volumes:
+      - .:/home/api
+      - /home/api/node_modules
+
 volumes:
   craftbeer_pg_data:
 
