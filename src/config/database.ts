@@ -5,7 +5,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 dotenv.config({ path: 'src/../.env' });
 
 const configDatabase = process.env.DATABASE_URL
-  ? { url: process.env.DATABASE_URL }
+  ? { url: process.env.DATABASE_URL, ssl: true }
   : {
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),
