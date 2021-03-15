@@ -8,11 +8,13 @@ import {
   OneToOne,
   JoinColumn,
   BeforeUpdate,
+  OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID, HideField } from '@nestjs/graphql';
 import * as bcrypt from 'bcryptjs';
 
 import { File } from '../file/file.entity';
+import { Recipe } from 'src/recipe/recipe.entity';
 
 @ObjectType()
 @Entity({ name: 'users' })
@@ -57,6 +59,12 @@ export class User {
   )
   @JoinColumn({ name: 'avatar_id' })
   fileConnection: Promise<File>;
+
+  @OneToMany(
+    () => Recipe,
+    recipe => recipe.user,
+  )
+  recipes: Promise<Recipe[]>;
 
   checkPassword(password) {
     return bcrypt.compare(password, this.password);
